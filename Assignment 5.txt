@@ -1,0 +1,482 @@
+// 1. Create a C# program that intentionally throws a DivideByZeroException when dividing by zero. Catch the exception and handle it gracefully.
+
+using System;
+namespace Assignment5
+{
+    internal class FileName1
+    {
+        static int Divide(int num, int deno)
+        {
+            if (deno == 0)
+            {
+                throw new DivideByZeroException("Denominator cannot be zero");
+            }
+            return num / deno;
+        }
+        public static void Main(String[] args)
+        {
+            try
+            {
+                int num = 10;
+                int deno = 0;
+                int res = Divide(num, deno);
+                Console.WriteLine(res);
+                Console.ReadLine();
+            }
+            catch (DivideByZeroException S)
+            {
+                Console.WriteLine(S.Message);
+                Console.ReadLine();
+            }
+        }
+    }
+}
+
+// 2. Write a program that attempts to access an array element at an index that is out of bounds. Use a try-catch block to handle the IndexOutOfRangeException.
+
+using System;
+namespace Assignment5
+{
+    internal class FileName2
+    {
+        public static void Main(String[] args)
+        {
+            int[] num = { 1, 2, 3, 4, 5 };
+            try
+            {
+                int index = 10;
+                int value = num[index];
+                Console.WriteLine("Value at index " + index + " : " + value);
+                Console.ReadLine();
+            }
+            catch (IndexOutOfRangeException S)
+            {
+                Console.WriteLine(S.Message);
+                Console.ReadLine();
+            }
+        }
+    }
+}
+
+// 3. Create a C# program that uses a try-catch block to handle an exception when converting a string to an integer using int.Parse().Handle the FormatException that may occur.
+
+using System;
+namespace Assignment5
+{
+    internal class FileName3
+    {
+        public static void Main(String[]args)
+        {
+            string userInput = "abc";
+            try
+            {
+                int number = int.Parse(userInput);
+                Console.WriteLine("Parsed number: " + number);
+                Console.ReadLine();
+            }
+            catch (FormatException S)
+            {
+                Console.WriteLine(S.Message);
+                Console.ReadLine();
+            }
+        }
+    }
+}
+
+// 4. Implement a C# program that uses a custom exception class. Create a custom exception and throw it in your code when a specific condition is met.
+
+using System;
+namespace Assignment5
+{
+    internal class FileName4
+    {
+        public static void Main(String[]args)
+        {
+            int userInput = -5;
+            try
+            {
+                if (userInput < 0)
+                {
+                    throw new CustomException("Input cannot be negative");
+                }
+
+                Console.WriteLine(userInput);
+                Console.ReadLine();
+            }
+            catch (CustomException S)
+            {
+                Console.WriteLine(S.Message);
+                Console.ReadLine();
+            }
+        }
+        public class CustomException : Exception
+        {
+            public CustomException(string message) : base(message)
+            {
+            }
+        }
+    }
+}
+
+// 5. Build a C# program that demonstrates the use of multiple catch blocks for different exception types.Handle exceptions such as IndexOutOfRangeException, FormatException, and InvalidOperationException
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment5
+{
+    internal class FileName5
+    {
+        static void Main()
+        {
+            try
+            {
+                int[] numbers = { 1, 2, 3 };
+                Console.WriteLine("Accessing an element at index 5: " + numbers[5]);
+
+                string invalidNumber = "abc";
+                int parsedNumber = int.Parse(invalidNumber);
+
+                throw new InvalidOperationException("This is an InvalidOperationException");
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Console.WriteLine($"IndexOutOfRangeException: {ex.Message}");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"FormatException: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"InvalidOperationException: {ex.Message}");
+            }
+            Console.ReadLine();
+        }
+    }
+}
+
+// 6. Create a C# program that includes nested try-catch blocks. Throw an exception in an inner block and catch it in the outer block. Explain the flow of execution
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment5
+{
+    internal class FileName6
+    {
+        static void Main()
+        {
+            try
+            {
+                Console.WriteLine("Outer Try Block: Start");
+
+                try
+                {
+                    Console.WriteLine("Inner Try Block: Start");
+
+                    int result = PerformDivision(10, 0);
+
+                    Console.WriteLine("Inner Try Block: End");
+                }
+                catch (DivideByZeroException innerException)
+                {
+                    Console.WriteLine($"Caught an exception in the Inner Catch Block: {innerException.Message}");
+                }
+                finally
+                {
+                    Console.WriteLine("Inner Finally Block: This block always executes for the inner try-catch");
+                }
+
+                Console.WriteLine("Outer Try Block: End");
+            }
+            catch (Exception outerException)
+            {
+                Console.WriteLine($"Caught an exception in the Outer Catch Block: {outerException.Message}");
+            }
+            finally
+            {
+                Console.WriteLine("Outer Finally Block: This block always executes for the outer try-catch");
+            }
+
+            Console.WriteLine("Program End");
+            Console.ReadLine();
+        }
+
+        static int PerformDivision(int numerator, int denominator)
+        {
+            return numerator / denominator;
+        }
+    }
+}
+
+// 7. Implement a program that divides two numbers entered by the user. Handle exceptions like division by zero and invalid input. Continue to prompt the user for valid input until a valid division is performed
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment5
+{
+    internal class FileName7
+    {
+        static void Main()
+        {
+            bool validInput = false;
+
+            do
+            {
+                try
+                {
+                    Console.Write("Enter the numerator: ");
+                    int numerator = int.Parse(Console.ReadLine());
+
+                    Console.Write("Enter the denominator: ");
+                    int denominator = int.Parse(Console.ReadLine());
+
+                    if (denominator == 0)
+                    {
+                        throw new DivideByZeroException("Division by zero is not allowed.");
+                    }
+
+                    int result = PerformDivision(numerator, denominator);
+                    Console.WriteLine($"Result of {numerator} / {denominator} is: {result}");
+
+                    validInput = true;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input. Please enter valid integers.");
+                }
+                catch (DivideByZeroException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                }
+            } while (!validInput);
+            Console.ReadLine();
+        }
+
+        static int PerformDivision(int numerator, int denominator)
+        {
+            return numerator / denominator;
+        }
+    }
+}
+
+// 8. Develop a C# program that demonstrates how to use the throw statement to rethrow an exception.Catch the rethrown exception and handle it appropriately
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment5
+{
+    internal class FileName8
+    {
+        static void Main()
+        {
+            try
+            {
+                PerformOperation();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Caught in Main Catch Block: {ex.Message}");
+                Console.ReadLine();
+            }
+        }
+
+        static void PerformOperation()
+        {
+            try
+            {
+                Console.WriteLine("Attempting to perform an operation...");
+                int result = PerformDivision(10, 0);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Caught in PerformOperation Catch Block: {ex.Message}");
+
+                Console.WriteLine("Rethrowing the exception...");
+                throw;
+            }
+        }
+
+        static int PerformDivision(int numerator, int denominator)
+        {
+            return numerator / denominator;
+        }
+    }
+}
+
+// 9. Develop a program that simulates a simple calculator with basic arithmetic operations (addition, subtraction, multiplication, and division). Use exception handling to catch and handle various type of exceptions that may occur
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment5
+{
+    internal class FileName9
+    {
+        static void Main()
+        {
+            try
+            {
+                Console.WriteLine("Enter the first number: ");
+                double num1 = double.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter the operation (+, -, *, /): ");
+                char operation = char.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter the second number: ");
+                double num2 = double.Parse(Console.ReadLine());
+
+                double result = PerformOperation(num1, num2, operation);
+                Console.WriteLine($"Result: {num1} {operation} {num2} = {result}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Invalid input. Please enter valid numbers.");
+            }
+            catch (DivideByZeroException)
+            {
+                Console.WriteLine("Error: Division by zero is not allowed.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            }
+            Console.ReadLine();
+        }
+
+        static double PerformOperation(double num1, double num2, char operation)
+        {
+            switch (operation)
+            {
+                case '+':
+                    return num1 + num2;
+                case '-':
+                    return num1 - num2;
+                case '*':
+                    return num1 * num2;
+                case '/':
+                    if (num2 == 0)
+                    {
+                        throw new DivideByZeroException("Division by zero is not allowed.");
+                    }
+                    return num1 / num2;
+                default:
+                    throw new InvalidOperationException("Invalid operation. Please enter +, -, *, or /.");
+            }
+        }
+    }
+}
+
+// 10. Write a C# program that simulates adding items to a shopping cart. The program should take user input for the price of items and store them in an array. Implement exception handling with multiple catch blocks to handle various scenarios
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment5
+{
+    internal class FileName10
+    {
+        static void Main()
+        {
+            const int MaxPrice = 10000;
+
+            Console.WriteLine("Welcome to the Shopping Cart!");
+            Console.WriteLine("Enter the prices of items to add to your cart.");
+            Console.WriteLine("Enter a negative price to finish.");
+
+            int[] shoppingCart = new int[100];
+            int cartIndex = 0;
+
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Enter the price of the item (or a negative value to finish): ");
+                    string input = Console.ReadLine();
+
+                    int price = int.Parse(input);
+                    if (price < 0)
+                        break;
+
+                    if (price < 0)
+                    {
+                        throw new NegativePriceException("Error: Negative prices are not allowed.");
+                    }
+
+                    if (!int.TryParse(input, out _))
+                    {
+                        throw new FormatException("Error: Invalid input. Please enter a valid price.");
+                    }
+
+                    if (price > MaxPrice)
+                    {
+                        throw new PriceTooHighException($"Error: Price exceeds the maximum value of {MaxPrice}.");
+                    }
+
+                    shoppingCart[cartIndex++] = price;
+                }
+                catch (NegativePriceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (PriceTooHighException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                }
+            }
+
+            int totalPrice = 0;
+            for (int i = 0; i < cartIndex; i++)
+            {
+                totalPrice += shoppingCart[i];
+            }
+
+            Console.WriteLine($"Thank you for shopping! Your total price is: {totalPrice}");
+            Console.ReadLine();
+        }
+        
+    }
+
+    class NegativePriceException : Exception
+    {
+        public NegativePriceException(string message) : base(message) { }
+    }
+
+    class PriceTooHighException : Exception
+    {
+        public PriceTooHighException(string message) : base(message) { }
+    }
+}
